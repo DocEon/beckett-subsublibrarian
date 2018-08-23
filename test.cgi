@@ -105,7 +105,7 @@ def searchRaws(string, lang, genre):
       raw = dict_to_search[work]["raw_fr"]
     if string in raw:
       textsToSearch.append(work)
-      print("Found string in" + work)
+#      print("Found string in" + work)
   for work in textsToSearch:
     getSents(work, genre)
     if lang == "en":
@@ -135,7 +135,10 @@ def searchRaws(string, lang, genre):
               result_dict[work][result_index].append(next_line)
           result_index = result_index + 1
     if result_index != 0:
-        print("Found " + str(result_index) + " results in " + work + ".")
+       url = "url_" + lang
+       title = "title_"+lang
+       print("Found " + str(result_index) + " results in <a href = 'http://" + dict_to_search[work][url] + "'>" + dict_to_search[work][title] + 
+".</a><br>")
   return result_dict
 
 def txtToDict(title_en, genre, getSents=True):
