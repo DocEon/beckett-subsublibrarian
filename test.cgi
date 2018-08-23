@@ -295,9 +295,11 @@ for genre in genres:
 	if "en" in langs:
 		print("<h4>Results in English:</h4>")
 		results = searchRaws(search_string, "en", genre)
+    print(results)
 	if "fr" in langs:
 		print("<h4>Results in French:</h4>")
 		results = searchRaws(search_string, "fr", genre)
+    print(results)
 
 print("<hr>")
 
