@@ -291,23 +291,16 @@ print("I'm trying to work out the best way to output the search results neatly -
 
 search_string = form['searchstring'].value
 print("<h3>You searched for " + search_string + "</h3>")
-big_result_dict = {}
 for genre in genres:
-  if "en" in langs:
-    print("<h4>Results in English:</h4>")
-    big_result_dict["en"][genre] = searchRaws(search_string, "en", genre)
-  if "fr" in langs:
-    print("<h4>Results in French:</h4>")
-    big_result_dict["fr"][genre] = searchRaws(search_string, "fr", genre)
-  for lang in big_result_dict.keys():
-    for genre in big_result_dict[lang].keys():
-      for work in big_result_dict[lang][genre].keys():
-        print("<h4>Results from " + work +"</h4>")
-        for result in big_result_dict[lang][genre][work]:
-          print("<p>Hit # " + big_result_dict[lang][genre][work][result_index] + "</p><br>")
-          for line in big_result_dict[lang][genre][work][result]:
-            print(line + "<br>")
-
+	if "en" in langs:
+		print("<h4>Results in English:</h4>")
+		results = searchRaws(search_string, "en", genre)
+		printResults(results, genre)
+	if "fr" in langs:
+		print("<h4>Results in French:</h4>")
+		results = searchRaws(search_string, "fr", genre)
+		printResults(results, genre)
+  
 print("<hr>")
 
 
