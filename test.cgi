@@ -206,8 +206,15 @@ def initAllRaw():
     works["shorts"] = shorts
 
 def printResults(result_dict, genre):
-  for key in result_dict.keys():
-    
+    for key in result_dict.keys():
+        if genre == "drama":
+            url = plays[key]['url_en']
+        elif genre == "novel":
+            url = novels[key]['url_en']
+        elif genre == "short":
+            url = shorts[key]['url_en']
+        else:
+            url = "error"
 # Sometimes this block breaks stuff. I'm not sure why. This is what needs to be fixed for printing search results to a page.
 #        print("<h3>* * * Found " + str(len(result_dict[key].keys())) + " results in <a href='http://" + url + "'>" + key+"</a></h3>")
 #        for x in range(0, len(result_dict[key].keys())):
@@ -287,11 +294,12 @@ print("<h3>You searched for " + search_string + " in " + genres + "</h3>")
 for genre in genres:
 	if "en" in langs:
 		print("<h4>Results in English:</h4>")
-		results_en = searchRaws(search_string, "en", genre)
+		results = searchRaws(search_string, "en", genre)
+		printResults(results, genre)
 	if "fr" in langs:
 		print("<h4>Results in French:</h4>")
-		results_fr = searchRaws(search_string, "fr", genre)
-
+		results = searchRaws(search_string, "fr", genre)
+		printResults(results, genre)
 print("<hr>")
 
 
