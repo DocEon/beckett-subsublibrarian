@@ -291,7 +291,7 @@ for genre in genres:
 	print("<h3>You searched for " + search_string + " in " + genre + "</h3>")
 	if "en" in langs:
 		print("<h4>Results in English:</h4>")
-		results = searchSaws(search_string, "en", genre)
+		results = searchRaws(search_string, "en", genre)
 		printResults(results, genre)
 	if "fr" in langs:
 		print("<h4>Results in French:</h4>")
