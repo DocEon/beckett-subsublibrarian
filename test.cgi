@@ -88,7 +88,57 @@ def searchSents(string, lang, genre):
 ".</a><br>")
     return result_dict
 
-def txtToDict(title_en, genre):
+def searchRaws(string, lang, genre):
+  string = string.lower()
+  textsToSearch = []
+  result_dict = {}
+  if genre == "drama":
+      dict_to_search = plays
+  elif genre == "novel":
+      dict_to_search = novels
+  elif genre == "short":
+      dict_to_search = shorts
+  for work in dict_to_search.keys():
+    if lang == "en":
+      raw = dict_to_search[work]["raw_en"]
+    else:
+      raw = dict_to_search[work]["raw_fr"]
+    if string in raw:
+      textsToSearch.append(work)
+      print("Found string in" + work)
+  for work in textsToSearch:
+    getSents(work, genre)
+    if lang == "en":
+      sents = dict_to_search[work]["sents_en"]
+    else:
+      sents = dict_to_search[work]["sents_fr"]
+    result_index = 0
+    for x in range(0, len(sents)):
+      if string in sents[x].lower():
+          if work not in result_dict.keys():
+              result_dict[work] = {}
+          result_dict[work][result_index] = []
+          if len(sents[x]) > 200:
+              location = sents[x].find(string)
+              result_dict[work][result_index].append(sents[x][(location-75):(location+75)])
+          else:    
+              try:
+                previous_line = sents[x-1]
+              except IndexError:
+                  previous_line = ""
+              try:
+                  next_line = sents[x+1]
+              except IndexError:
+                  next_line = ""
+              result_dict[work][result_index].append(previous_line)
+              result_dict[work][result_index].append(sents[x])
+              result_dict[work][result_index].append(next_line)
+          result_index = result_index + 1
+    if result_index != 0:
+        print("Found " + str(result_index) + " results in " + work + ".")
+  return result_dict
+
+def txtToDict(title_en, genre, getSents=True):
   work = {}
   path_en  = getPath(title_en, path_list)
   file_en = open(path_en, "r", encoding="utf-8")
@@ -97,9 +147,9 @@ def txtToDict(title_en, genre):
   work["raw_en"] = file_en.read()
 #  play["words_en"] = word_tokenize(play["raw_en"])
 #  play["text_en"] = Text(play["words_en"])
-  work["sents_en"] = sent_tokenize(work["raw_en"])
   work["url_en"] = getURL(path_en)
-
+  if getSents:
+    work["sents_en"] = sent_tokenize(work["raw_en"])
   title_fr = getFrenchTitle(title_en, genre)
   path_fr = getPath(title_fr, path_list, language="fr")
   if path_fr != None:
@@ -109,29 +159,45 @@ def txtToDict(title_en, genre):
     work["raw_fr"] = file_fr.read()
 #    play["words_fr"] = word_tokenize(play["raw_fr"])
 #    play["text_fr"] = Text(play["words_fr"])
-    work["sents_fr"] = sent_tokenize(work["raw_fr"])
     work["url_fr"] = getURL(path_fr)
-
-#  print("Successfully gobbled up " + title_en + ", AKA " + title_fr)
+    if getSents:
+      work["sents_fr"] = sent_tokenize(work["raw_fr"])
+  print("Successfully gobbled up " + title_en + ", AKA " + title_fr)
   file_en.close()
   return work
 
-def initPlays():
+def initPlays(getSents=True):
     for x in range(0, len(play_list)):
-        plays[play_list[x][0]] = txtToDict(play_list[x][0], "drama")
+        plays[play_list[x][0]] = txtToDict(play_list[x][0], "drama", getSents)
 
-def initNovels():
+def initNovels(getSents=True):
     for x in range(0, len(novel_list)):
-        novels[novel_list[x][0]] = txtToDict(novel_list[x][0], "novel")
+        novels[novel_list[x][0]] = txtToDict(novel_list[x][0], "novel", getSents)
 
-def initShorts():
+def initShorts(getSents=True):
     for x in range(0, len(short_list)):
-        shorts[short_list[x][0]] = txtToDict(short_list[x][0], "short")
+        shorts[short_list[x][0]] = txtToDict(short_list[x][0], "short", getSents)
+
+def getSents(title_en, genre):
+  if genre == "drama":
+    plays[title_en] = txtToDict(title_en, "drama")
+  elif genre == "novel":
+    novels[title_en] = txtToDict(title_en, "novel")
+  elif genre == "short":
+    shorts[title_en] = txtToDict(title_en, "short")
 
 def initAll():
     initPlays()
     initNovels()
     initShorts()
+    works["plays"] = plays
+    works["novels"] = novels
+    works["shorts"] = shorts
+
+def initAllRaw():
+    initPlays(getSents=False)
+    initNovels(getSents=False)
+    initShorts(getSents=False)
     works["plays"] = plays
     works["novels"] = novels
     works["shorts"] = shorts
@@ -206,15 +272,13 @@ if "fr" in form.keys():
 
 genres = []
 
+initAllRaw()
 if "drama" in form.keys():
 	genres.append("drama")
-	initPlays()
 if "novel" in form.keys():
 	genres.append("novel")
-	initNovels()
 if "short_prose" in form.keys():
 	genres.append("short_prose")
-	initShorts()
 
 print("Languages: " + ', '.join(langs) + "<br>")
 print("Genres: " + ', '.join(genres) + "<br><br>")
@@ -227,11 +291,11 @@ for genre in genres:
 	print("<h3>You searched for " + search_string + " in " + genre + "</h3>")
 	if "en" in langs:
 		print("<h4>Results in English:</h4>")
-		results = searchSents(search_string, "en", genre)
+		results = searchSaws(search_string, "en", genre)
 		printResults(results, genre)
 	if "fr" in langs:
 		print("<h4>Results in French:</h4>")
-		results = searchSents(search_string, "fr", genre)
+		results = searchRaws(search_string, "fr", genre)
 		printResults(results, genre)
 print("<hr>")
 
