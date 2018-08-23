@@ -96,7 +96,7 @@ def searchRaws(string, lang, genre):
       dict_to_search = plays
   elif genre == "novel":
       dict_to_search = novels
-  elif genre == "short_prose":
+  elif genre == "short":
       dict_to_search = shorts
   for work in dict_to_search.keys():
     if lang == "en":
@@ -186,7 +186,7 @@ def getSents(title_en, genre):
     plays[title_en] = txtToDict(title_en, "drama")
   elif genre == "novel":
     novels[title_en] = txtToDict(title_en, "novel")
-  elif genre == "short_prose":
+  elif genre == "short":
     shorts[title_en] = txtToDict(title_en, "short")
 
 def initAll():
@@ -211,7 +211,7 @@ def printResults(result_dict, genre):
             url = plays[key]['url_en']
         elif genre == "novel":
             url = novels[key]['url_en']
-        elif genre == "short_prose":
+        elif genre == "short":
             url = shorts[key]['url_en']
         else:
             url = "error"
@@ -227,7 +227,7 @@ def getFrenchTitle(title_en, genre):
       title_fr = [title[1] for title in play_list if title[0] == title_en]
   elif genre == "novel":
       title_fr = [title[1] for title in novel_list if title[0] == title_en]
-  elif genre == "short_prose":
+  elif genre == "short":
       title_fr = [title[1] for title in short_list if title[0] == title_en]
   return title_fr[0]
   
@@ -281,7 +281,7 @@ if "drama" in form.keys():
 if "novel" in form.keys():
 	genres.append("novel")
 if "short_prose" in form.keys():
-	genres.append("short_prose")
+	genres.append("short")
 
 print("Languages: " + ', '.join(langs) + "<br>")
 print("Genres: " + ', '.join(genres) + "<br><br>")
