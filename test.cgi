@@ -207,7 +207,7 @@ def initAllRaw():
 
 def printResults(result_dict, genre):
   for key in result_dict.keys():
-
+    
 # Sometimes this block breaks stuff. I'm not sure why. This is what needs to be fixed for printing search results to a page.
 #        print("<h3>* * * Found " + str(len(result_dict[key].keys())) + " results in <a href='http://" + url + "'>" + key+"</a></h3>")
 #        for x in range(0, len(result_dict[key].keys())):
@@ -284,22 +284,14 @@ print("I'm trying to work out the best way to output the search results neatly -
 
 search_string = form['searchstring'].value
 print("<h3>You searched for " + search_string + " in " + genres + "</h3>")
-big_result_dict = {}
 for genre in genres:
 	if "en" in langs:
 		print("<h4>Results in English:</h4>")
-		big_result_dict["en"][genre] = searchRaws(search_string, "en", genre)
+		results_en = searchRaws(search_string, "en", genre)
 	if "fr" in langs:
 		print("<h4>Results in French:</h4>")
-		big_result_dict["fr"][genre] = searchRaws(search_string, "fr", genre)
-# for lang in big_result_dict.keys():
-#   for genre in big_result_dict[lang].keys():
-#     for work in big_result_dict[lang][genre].keys():
-#       print("<h4>Results from " + work +"</h4>")
-#       for result in big_result_dict[lang][genre][work]:
-#         print("<p>Hit # " + big_result_dict[lang][genre][work][result_index] + "</p><br>")
-#         for line in big_result_dict[lang][genre][work][result]:
-#           print(line + "<br>")
+		results_fr = searchRaws(search_string, "fr", genre)
+
 print("<hr>")
 
 
