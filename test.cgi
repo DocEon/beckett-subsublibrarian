@@ -290,7 +290,7 @@ print("For now, the best way to view your results is to click the link to the wo
 print("I'm trying to work out the best way to output the search results neatly - coming soon!<br>")
 
 search_string = form['searchstring'].value
-print("<h3>You searched for " + search_string + " in " + genres + "</h3>")
+print("<h3>You searched for " + search_string + "</h3>")
 for genre in genres:
 	if "en" in langs:
 		print("<h4>Results in English:</h4>")
