@@ -291,17 +291,13 @@ print("I'm trying to work out the best way to output the search results neatly -
 
 search_string = form['searchstring'].value
 print("<h3>You searched for " + search_string + "</h3>")
-result_list = []
 for genre in genres:
 	if "en" in langs:
 		print("<h4>Results in English:</h4>")
 		results = searchRaws(search_string, "en", genre)
-    result_list.append(results)
 	if "fr" in langs:
 		print("<h4>Results in French:</h4>")
 		results = searchRaws(search_string, "fr", genre)
-    result_list.append(results)
-
 
 print("<hr>")
 
