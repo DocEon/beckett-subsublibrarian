@@ -162,7 +162,7 @@ def txtToDict(title_en, genre, getSents=True):
     work["url_fr"] = getURL(path_fr)
     if getSents:
       work["sents_fr"] = sent_tokenize(work["raw_fr"])
-  print("Successfully gobbled up " + title_en + ", AKA " + title_fr)
+#  print("Successfully gobbled up " + title_en + ", AKA " + title_fr)
   file_en.close()
   return work
 
