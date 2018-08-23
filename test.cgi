@@ -292,14 +292,14 @@ for genre in genres:
 	if "fr" in langs:
 		print("<h4>Results in French:</h4>")
 		big_result_dict["fr"][genre] = searchRaws(search_string, "fr", genre)
-=beginfor lang in big_result_dict.keys():
-  for genre in big_result_dict[lang].keys():
-    for work in big_result_dict[lang][genre].keys():
-      print("<h4>Results from " + work +"</h4>")
-      for result in big_result_dict[lang][genre][work]:
-        print("<p>Hit # " + big_result_dict[lang][genre][work][result_index] + "</p><br>")
-        for line in big_result_dict[lang][genre][work][result]:
-          print(line + "<br>")=end
+# for lang in big_result_dict.keys():
+#   for genre in big_result_dict[lang].keys():
+#     for work in big_result_dict[lang][genre].keys():
+#       print("<h4>Results from " + work +"</h4>")
+#       for result in big_result_dict[lang][genre][work]:
+#         print("<p>Hit # " + big_result_dict[lang][genre][work][result_index] + "</p><br>")
+#         for line in big_result_dict[lang][genre][work][result]:
+#           print(line + "<br>")
 print("<hr>")
 
 
