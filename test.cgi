@@ -301,14 +301,7 @@ for genre in genres:
 		print("<h4>Results in French:</h4>")
 		results = searchRaws(search_string, "fr", genre)
     result_list.append(results)
-print("<h3>Long results:</h3>")
-for result_dict in result_list:
-  for work in result_dict:
-    print("<h4>Results from " + work + "</h4>")
-    for result in result_dict[work].keys():
-      print("Result #" + result)
-      for line in result_dict[work][result]:
-        print(line)
+
 
 print("<hr>")
 
